@@ -1,0 +1,324 @@
+<html 
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <link href="default.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css">
+    <link rel="stylesheet" href="leaflet.css" />
+    <script src="leaflet.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	</head>
+
+
+    <title>Projet ROUANE Ali </title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .leaflet-container {
+            height: 400px;
+            width: 600px;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    </style>
+
+    <style>#map { width: 800px; height: 500px; }
+.info { padding: 6px 8px; font: 14px/16px Arial, Helvetica, sans-serif; background: white; background: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(0,0,0,0.2); border-radius: 5px; } .info h4 { margin: 0 0 5px; color: #777; }
+.legend { text-align: left; line-height: 18px; color: #555; } .legend i { width: 18px; height: 18px; float: left; margin-right: 8px; opacity: 0.7; }</style>
+	
+<body>
+
+<div id="wrapper">
+        <center><div id="mapid" style="width: 1600px; height: 1000px;"></div></center>
+        <div class="leaflet-top leaflet-right"><div class="info leaflet-control">
+		<script src="region.js"></script>
+		<script src="SliderControl.js"></script>
+            <script>
+var sliderControl = null;
+var mymap = L.map('mapid').setView([33.2537, -7.5998], 8);
+
+var info = L.control();
+
+info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info');
+        this.update();
+        return this._div;
+    };
+
+
+info.update = function (props) {
+        this._div.innerHTML = '<h4>le nombre de nouveaux cas</h4>' +  (props ?
+            '<b>' + props.Nom_Provin + '</b><br />' + props.jour_un + ' cas' : 'Merci de mettre le cursuer sur une region pour avoir des informations');
+};
+
+info.addTo(mymap);
+
+			
+
+function getColor(d) {
+    return d > 32 ? '#800026' :
+        d > 16  ? '#BD0026' :
+        d > 8  ? '#E31A1C' :
+        d > 4  ? '#FC4E2A' :
+        d > 2   ? '#FD8D3C' : '#FFEDA0';
+    }
+    
+   
+function style1(feature) {
+    return {
+            weight: 2,
+            opacity: 1,
+            color: 'black',
+            dashArray: '3',
+            fillOpacity: 0.7,
+            fillColor: getColor(feature.properties.jour_un)
+            };
+            }
+function style2(feature) {
+    return {
+            weight: 2,
+            opacity: 1,
+            color: 'black',
+            dashArray: '3',
+            fillOpacity: 0.7,
+            fillColor: getColor(feature.properties.jour_deux)
+            };
+            }
+				function style3(feature) {
+                    return {
+                        weight: 2,
+                        opacity: 1,
+                        color: 'black',
+                        dashArray: '3',
+                        fillOpacity: 0.7,
+                        fillColor: getColor(feature.properties.jour_trois)
+                    };
+                }
+				function style4(feature) {
+                    return {
+                        weight: 2,
+                        opacity: 1,
+                        color: 'black',
+                        dashArray: '3',
+                        fillOpacity: 0.7,
+                        fillColor: getColor(feature.properties.jour_quatre)
+                    };
+                }
+				 function style5(feature) {
+                    return {
+                        weight: 2,
+                        opacity: 1,
+                        color: 'black',
+                        dashArray: '3',
+                        fillOpacity: 0.7,
+                        fillColor: getColor(feature.properties.jour_cinq)
+                    };
+                }
+				function style6(feature) {
+                    return {
+                        weight: 2,
+                        opacity: 1,
+                        color: 'black',
+                        dashArray: '3',
+                        fillOpacity: 0.7,
+                        fillColor: getColor(feature.properties.jour_six)
+                    };
+                }
+				function style7(feature) {
+                    return {
+                        weight: 2,
+                        opacity: 1,
+                        color: 'black',
+                        dashArray: '3',
+                        fillOpacity: 0.7,
+                        fillColor: getColor(feature.properties.jour_sept)
+                    };
+                }
+				 
+					
+                function highlightFeature(e) {
+                    var layer = e.target;
+
+                    layer.setStyle({
+                        weight: 5,
+                        color: '#666',
+                        dashArray: '',
+                        fillOpacity: 0.7
+                    });                   
+                }
+
+                var geojson1;
+
+                function resetHighlight1(e) {
+                    geojson1.resetStyle(e.target);
+                    
+                }
+				var geojson2;
+
+                function resetHighlight2(e) {
+                    geojson2.resetStyle(e.target);
+                    
+                }
+				var geojson3;
+
+                function resetHighlight3(e) {
+                    geojson3.resetStyle(e.target);
+                
+				var geojson4;  
+                }
+				  function resetHighlight4(e) {
+                    geojson4.resetStyle4(e.target);
+                    
+                }
+				var geojson5;
+
+                function resetHighlight5(e) {
+                    geojson5.resetStyle(e.target);
+                    
+                }
+				var geojson6;
+
+                function resetHighlight6(e) {
+                    geojson6.resetStyle(e.target);
+					
+                var geojson7;
+                }  function resetHighlight7(e) {
+                    geojson7.resetStyle(e.target);
+                    
+                }
+				var geojson8;
+
+                
+				
+	
+                function zoomToFeature(e) {
+                    mymap.fitBounds(e.target.getBounds());
+                }
+
+                function onEachFeature1(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight1,
+                        click: zoomToFeature
+                    });
+                }
+				 function onEachFeature2(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight2,
+                        click: zoomToFeature
+                    });
+                }
+				function onEachFeature3(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight3,
+                        click: zoomToFeature
+                    });
+                }
+				
+				function onEachFeature4(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight4,
+                        click: zoomToFeature
+                    });
+                }
+				 function onEachFeature5(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight5,
+                        click: zoomToFeature
+                    });
+                }
+				function onEachFeature6(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight6,
+                        click: zoomToFeature
+                    });
+                }                
+				function onEachFeature7(feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight7,
+                        click: zoomToFeature
+                    });
+                }
+				 
+				
+				
+                geojson1 = L.geoJson(maregion,{style: style1, onEachFeature: onEachFeature1 , time : 'le 27/11/2021'
+                        }
+                );
+				geojson2 = L.geoJson(maregion,{style: style2, onEachFeature: onEachFeature2 , time : 'le 28/11/2021'
+                        }
+                );
+				geojson3 = L.geoJson(maregion,{style: style3, onEachFeature: onEachFeature3 , time : 'le 29/11/2021'
+                        }
+                );
+				geojson4 = L.geoJson(maregion,{style: style4, onEachFeature: onEachFeature4 ,  time : 'le 30/11/2021'
+                        }
+                );
+				geojson5 = L.geoJson(maregion,{style: style5, onEachFeature: onEachFeature5 ,  time : 'le 1/12/2021'
+                        }
+                );
+				geojson6 = L.geoJson(maregion,{style: style6, onEachFeature: onEachFeature6 , time : 'le 2/12/2021'
+                        }
+                );
+				geojson7 = L.geoJson(maregion,{style: style7, onEachFeature: onEachFeature7 , time : 'le 3/12/2021'
+                        }
+                );
+				
+				
+layerGroup = L.layerGroup([geojson1, geojson2, geojson3, geojson4, geojson5, geojson6, geojson7]);
+var sliderControl = L.control.sliderControl({layer:layerGroup, follow: true, position: "topright"});
+mymap.addControl(sliderControl);
+sliderControl.startSlider();
+
+
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function (map) {
+
+var div = L.DomUtil.create('div', 'info legend');
+var grades = [0, 2, 4, 8, 16, 32];
+var labels = [];
+var from, to;
+
+for (var i = 0; i < grades.length; i++) {
+        from = grades[i];
+        to = grades[i + 1];
+
+        labels.push(
+            '<i style="background:' + getColor(from + 1) + '"></i> ' +
+            from + (to ? '&ndash;' + to : '+'));
+    }
+
+        div.innerHTML = labels.join('<br>');
+        return div;
+    };
+
+legend.addTo(mymap);
+
+
+				
+	   </script>
+
+</body>
+</html>
